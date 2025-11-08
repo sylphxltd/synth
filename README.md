@@ -143,7 +143,7 @@ Transform Operations:
 
 | Feature Category | Status | Completeness |
 |-----------------|--------|--------------|
-| **CommonMark Core** | ✅ | 95% |
+| **CommonMark Core** | ✅ | 98% |
 | **GFM Extensions** | ✅ | 100% |
 | **Performance** | ✅ | 100% |
 | **Documentation** | ✅ | 100% |
@@ -160,6 +160,8 @@ Transform Operations:
 - ✅ **Blockquotes** (`> quote`)
 - ✅ **Horizontal Rules** (`---`, `***`, `___`)
 - ✅ **Blank Lines**
+- ✅ **HTML Blocks** (`<div>...</div>`, comments, CDATA, etc.)
+- ✅ **Link Reference Definitions** (`[ref]: url "title"`)
 
 #### Inline Elements
 - ✅ **Emphasis** (`*italic*`, `_italic_`)
@@ -168,7 +170,8 @@ Transform Operations:
 - ✅ **Links** (`[text](url)`)
 - ✅ **Images** (`![alt](url)`)
 - ✅ **Escape Sequences** (`\*`, `\[`, etc.)
-- ✅ **Hard Line Breaks** (`\` + newline)
+- ✅ **Hard Line Breaks** (`\` + newline, two spaces + newline)
+- ✅ **Soft Line Breaks** (plain newline)
 
 #### GFM Extensions
 - ✅ **Tables** (with alignment)
@@ -177,8 +180,7 @@ Transform Operations:
 - ✅ **Task Lists** (`- [x] Done`)
 
 ### 🚧 In Development
-- ⏳ **Reference-style Links** (`[text][ref]`)
-- ⏳ **HTML Blocks** (`<div>...</div>`)
+- ⏳ **Reference-style Link Resolution** (inline `[text][ref]` using parsed definitions)
 - ⏳ **Complete CommonMark Spec Compliance**
 
 ### 📊 Performance Comparison
@@ -219,12 +221,11 @@ const index = parser.getIndex()  // Build when needed
 - Performance regression tests
 - CommonMark compliance tests
 
-### 🎯 Current Completeness: ~95%
+### 🎯 Current Completeness: ~98%
 
 **Next Steps:**
-1. Reference-style links
-2. HTML blocks
-3. 100% CommonMark spec compliance
+1. Reference-style link resolution (inline `[text][ref]`)
+2. 100% CommonMark spec compliance
 
 📈 [View Detailed Benchmarks](./BENCHMARK_RESULTS.md)
 
