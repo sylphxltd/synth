@@ -18,7 +18,7 @@ export * from './types.js'
 export * from './tokens.js'
 
 // Export main parser
-export { Parser, createParser, parse } from './parser.js'
+export { Parser, createParser, parse, parseAsync, DEFAULT_PARSE_OPTIONS } from './parser.js'
 export type { ParseOptions } from './parser.js'
 
 // Export incremental parser

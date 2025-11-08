@@ -14,7 +14,7 @@ import type { Tree, NodeId } from '@sylphx/synth'
 import { createTree, addNode } from '@sylphx/synth'
 import type { Edit } from '@sylphx/synth'
 import { createIndex, type ASTIndex } from '@sylphx/synth'
-import { TreeStructureError } from '@sylphx/synth'
+import { TreeStructureError, SynthError } from '@sylphx/synth'
 import { Tokenizer } from './tokenizer.js'
 import { InlineTokenizer } from './inline-tokenizer.js'
 import { BatchTokenizer } from './batch-tokenizer.js'
@@ -33,7 +33,9 @@ export interface ParseOptions {
   buildIndex?: boolean
 
   /**
-   * Plugins to apply during parsing
+   * Plugins to apply during parsing (sync or async)
+   * - Use parse() for sync plugins
+   * - Use parseAsync() for async plugins
    */
   plugins?: Plugin[]
 
@@ -53,8 +55,32 @@ export interface ParseOptions {
   /**
    * Batch size for batch tokenizer (lines processed at once)
    * @default 16 - Optimal for most documents
+   * @range 1-128
    */
   batchSize?: number
+}
+
+/**
+ * Default parse options
+ */
+export const DEFAULT_PARSE_OPTIONS: Required<ParseOptions> = {
+  buildIndex: false,
+  plugins: [],
+  useNodePool: true,
+  useBatchTokenizer: false,
+  batchSize: 16,
+} as const
+
+/**
+ * Validate parse options
+ * @throws {SynthError} When options are invalid
+ */
+function validateOptions(options: ParseOptions): void {
+  if (options.batchSize !== undefined) {
+    if (options.batchSize < 1 || options.batchSize > 128) {
+      throw new SynthError('batchSize must be between 1 and 128', 'INVALID_OPTIONS')
+    }
+  }
 }
 
 /**
@@ -78,18 +104,41 @@ export class Parser {
   private nodePool: MarkdownNodePool | null = null
 
   /**
-   * Parse Markdown text into AST (synchronous)
+   * Parse Markdown text into AST
    *
    * @param text - Markdown source text
-   * @param options - Parse options (plugins not supported in sync mode)
+   * @param options - Parse options (supports sync plugins)
    * @returns AST tree
    *
-   * Note: Index building is DISABLED by default for 4x performance.
-   * Enable with { buildIndex: true } if you need query capabilities.
-   * For plugin support, use parseAsync() instead.
+   * @example
+   * ```typescript
+   * // Simple parse
+   * const tree = parser.parse('# Hello World')
+   *
+   * // With plugins
+   * const tree = parser.parse(text, {
+   *   plugins: [addHeadingIds, tableOfContents]
+   * })
+   *
+   * // With optimizations
+   * const tree = parser.parse(largeDoc, {
+   *   useBatchTokenizer: true,
+   *   useNodePool: true,
+   *   batchSize: 32
+   * })
+   * ```
    */
-  parse(text: string, options: Omit<ParseOptions, 'plugins'> = {}): Tree {
-    const { buildIndex = false, useBatchTokenizer = false, batchSize = 16, useNodePool = false } = options
+  parse(text: string, options: ParseOptions = {}): Tree {
+    // Validate options
+    validateOptions(options)
+
+    const {
+      buildIndex = DEFAULT_PARSE_OPTIONS.buildIndex,
+      plugins = DEFAULT_PARSE_OPTIONS.plugins,
+      useBatchTokenizer = DEFAULT_PARSE_OPTIONS.useBatchTokenizer,
+      batchSize = DEFAULT_PARSE_OPTIONS.batchSize,
+      useNodePool = DEFAULT_PARSE_OPTIONS.useNodePool
+    } = options
 
     // Initialize node pool if requested
     if (useNodePool && !this.nodePool) {
@@ -109,6 +158,41 @@ export class Parser {
 
     // Build tree
     this.tree = this.buildTree(this.tokens, text, useNodePool)
+
+    // Apply plugins (sync only - merge registered + one-off)
+    const allPlugins = [...this.pluginManager.getPlugins(), ...plugins]
+    if (allPlugins.length > 0) {
+      // Check for async plugins
+      const hasAsyncPlugin = allPlugins.some(p =>
+        'transform' in p && p.transform.constructor.name === 'AsyncFunction'
+      )
+
+      if (hasAsyncPlugin) {
+        throw new SynthError(
+          'Detected async plugins. Use parseAsync() instead of parse()',
+          'ASYNC_PLUGIN_IN_SYNC_PARSE'
+        )
+      }
+
+      // Apply sync plugins synchronously
+      for (const plugin of allPlugins) {
+        if ('transform' in plugin) {
+          this.tree = plugin.transform(this.tree) as Tree
+        } else if ('visitors' in plugin) {
+          if (plugin.setup) {
+            plugin.setup(this.tree)
+          }
+
+          const tempManager = new PluginManager()
+          tempManager.use(plugin)
+          this.tree = tempManager['applyVisitors'](this.tree, plugin.visitors)
+
+          if (plugin.teardown) {
+            plugin.teardown(this.tree)
+          }
+        }
+      }
+    }
 
     // Build query index (OPTIONAL - disabled by default)
     if (buildIndex) {
@@ -122,14 +206,38 @@ export class Parser {
   }
 
   /**
-   * Parse Markdown text into AST with plugin support (async)
+   * Parse Markdown text into AST (async)
+   *
+   * Use this when you have async plugins or want to use async/await.
    *
    * @param text - Markdown source text
-   * @param options - Parse options with optional plugins
+   * @param options - Parse options (supports async plugins)
    * @returns Promise<AST tree>
+   *
+   * @example
+   * ```typescript
+   * // With async plugins
+   * const tree = await parser.parseAsync(text, {
+   *   plugins: [asyncPlugin1, asyncPlugin2]
+   * })
+   *
+   * // Mixed sync + async plugins
+   * const tree = await parser.parseAsync(text, {
+   *   plugins: [syncPlugin, asyncPlugin]
+   * })
+   * ```
    */
   async parseAsync(text: string, options: ParseOptions = {}): Promise<Tree> {
-    const { buildIndex = false, plugins = [], useBatchTokenizer = false, batchSize = 16, useNodePool = false } = options
+    // Validate options
+    validateOptions(options)
+
+    const {
+      buildIndex = DEFAULT_PARSE_OPTIONS.buildIndex,
+      plugins = DEFAULT_PARSE_OPTIONS.plugins,
+      useBatchTokenizer = DEFAULT_PARSE_OPTIONS.useBatchTokenizer,
+      batchSize = DEFAULT_PARSE_OPTIONS.batchSize,
+      useNodePool = DEFAULT_PARSE_OPTIONS.useNodePool
+    } = options
 
     // Initialize node pool if requested
     if (useNodePool && !this.nodePool) {
@@ -150,10 +258,11 @@ export class Parser {
     // Build tree
     this.tree = this.buildTree(this.tokens, text, useNodePool)
 
-    // Apply plugins if provided
-    if (plugins.length > 0) {
+    // Apply plugins (async - merge registered + one-off)
+    const allPlugins = [...this.pluginManager.getPlugins(), ...plugins]
+    if (allPlugins.length > 0) {
       const tempManager = new PluginManager()
-      tempManager.useAll(plugins)
+      tempManager.useAll(allPlugins)
       this.tree = await tempManager.apply(this.tree)
     }
 
@@ -169,52 +278,23 @@ export class Parser {
   }
 
   /**
-   * Register a plugin to be applied on every parse
+   * Register a plugin to be applied on all future parse() calls
+   *
+   * @param plugin - Plugin to register
+   * @returns this for chaining
+   *
+   * @example
+   * ```typescript
+   * const parser = createParser()
+   *   .use(addHeadingIds)
+   *   .use(tableOfContents)
+   *
+   * const tree = parser.parse(text)  // Both plugins applied
+   * ```
    */
   use(plugin: Plugin): this {
     this.pluginManager.use(plugin)
     return this
-  }
-
-  /**
-   * Parse with registered plugins applied
-   */
-  async parseWithPlugins(text: string, options: ParseOptions = {}): Promise<Tree> {
-    const { buildIndex = false, useBatchTokenizer = false, batchSize = 16, useNodePool = false } = options
-
-    // Initialize node pool if requested
-    if (useNodePool && !this.nodePool) {
-      this.nodePool = createNodePool()
-    }
-
-    // Tokenize (choose tokenizer based on option)
-    if (useBatchTokenizer) {
-      // Lazy init batch tokenizer with specified batch size
-      if (!this.batchTokenizer || this.batchTokenizer['batchSize'] !== batchSize) {
-        this.batchTokenizer = new BatchTokenizer(batchSize)
-      }
-      this.tokens = this.batchTokenizer.tokenize(text)
-    } else {
-      this.tokens = this.tokenizer.tokenize(text)
-    }
-
-    // Build tree
-    this.tree = this.buildTree(this.tokens, text, useNodePool)
-
-    // Apply registered plugins
-    if (this.pluginManager.getPlugins().length > 0) {
-      this.tree = await this.pluginManager.apply(this.tree)
-    }
-
-    // Build query index
-    if (buildIndex) {
-      this.index = createIndex(this.tree)
-      this.index.build()
-    } else {
-      this.index = null
-    }
-
-    return this.tree
   }
 
   /**
@@ -614,15 +694,57 @@ export function createParser(): Parser {
  * Parse markdown text into an AST
  *
  * Simple convenience function for one-off parsing.
- * For repeated parsing, create a Parser instance.
+ * For repeated parsing or persistent plugin registration, create a Parser instance.
+ *
+ * @param markdown - Markdown source text
+ * @param options - Parse options (supports sync plugins)
+ * @returns AST tree
+ * @throws {SynthError} When async plugins are detected (use parseAsync instead)
  *
  * @example
  * ```typescript
  * import { parse } from '@sylphx/synth-md'
+ *
+ * // Simple
  * const tree = parse('# Hello World')
+ *
+ * // With plugins
+ * const tree = parse(text, {
+ *   plugins: [addHeadingIds, tableOfContents]
+ * })
+ *
+ * // With optimizations
+ * const tree = parse(largeDoc, {
+ *   useBatchTokenizer: true,
+ *   batchSize: 32
+ * })
  * ```
  */
 export function parse(markdown: string, options?: ParseOptions): Tree {
   const parser = new Parser()
   return parser.parse(markdown, options)
+}
+
+/**
+ * Parse markdown text into an AST (async)
+ *
+ * Use when you have async plugins or prefer async/await.
+ *
+ * @param markdown - Markdown source text
+ * @param options - Parse options (supports async plugins)
+ * @returns Promise<AST tree>
+ *
+ * @example
+ * ```typescript
+ * import { parseAsync } from '@sylphx/synth-md'
+ *
+ * // With async plugins
+ * const tree = await parseAsync(text, {
+ *   plugins: [asyncPlugin1, asyncPlugin2]
+ * })
+ * ```
+ */
+export async function parseAsync(markdown: string, options?: ParseOptions): Promise<Tree> {
+  const parser = new Parser()
+  return parser.parseAsync(markdown, options)
 }
