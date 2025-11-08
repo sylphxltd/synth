@@ -220,6 +220,21 @@ export class JSParser {
         continue
       }
 
+      // Skip 'id' field for functions/classes - it's extracted in cleanData
+      // But NOT for VariableDeclarator where id is the variable name pattern
+      if (
+        key === 'id' &&
+        value &&
+        typeof value === 'object' &&
+        'type' in value &&
+        value.type === 'Identifier' &&
+        (node.type === 'FunctionDeclaration' ||
+          node.type === 'FunctionExpression' ||
+          node.type === 'ClassDeclaration')
+      ) {
+        continue
+      }
+
       if (value && typeof value === 'object') {
         if (Array.isArray(value)) {
           // Array of nodes

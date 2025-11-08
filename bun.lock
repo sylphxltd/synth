@@ -54,6 +54,19 @@
         "vitest": "^2.0.0",
       },
     },
+    "packages/synth-js-format": {
+      "name": "@sylphx/synth-js-format",
+      "version": "0.1.0",
+      "dependencies": {
+        "@sylphx/synth": "workspace:*",
+        "@sylphx/synth-js": "workspace:*",
+      },
+      "devDependencies": {
+        "@types/node": "^22.0.0",
+        "typescript": "^5.6.0",
+        "vitest": "^2.0.0",
+      },
+    },
     "packages/synth-md": {
       "name": "@sylphx/synth-md",
       "version": "0.1.0",
@@ -277,6 +290,8 @@
     "@sylphx/synth-html": ["@sylphx/synth-html@workspace:packages/synth-html"],
 
     "@sylphx/synth-js": ["@sylphx/synth-js@workspace:packages/synth-js"],
+
+    "@sylphx/synth-js-format": ["@sylphx/synth-js-format@workspace:packages/synth-js-format"],
 
     "@sylphx/synth-md": ["@sylphx/synth-md@workspace:packages/synth-md"],
 
