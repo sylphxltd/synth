@@ -47,6 +47,32 @@
         "vitest": "^2.0.0",
       },
     },
+    "packages/synth-md-katex": {
+      "name": "@sylphx/synth-md-katex",
+      "version": "0.1.0",
+      "dependencies": {
+        "@sylphx/synth": "workspace:*",
+        "@sylphx/synth-md": "workspace:*",
+      },
+      "devDependencies": {
+        "@types/node": "^22.0.0",
+        "typescript": "^5.6.0",
+        "vitest": "^2.0.0",
+      },
+    },
+    "packages/synth-md-mermaid": {
+      "name": "@sylphx/synth-md-mermaid",
+      "version": "0.1.0",
+      "dependencies": {
+        "@sylphx/synth": "workspace:*",
+        "@sylphx/synth-md": "workspace:*",
+      },
+      "devDependencies": {
+        "@types/node": "^22.0.0",
+        "typescript": "^5.6.0",
+        "vitest": "^2.0.0",
+      },
+    },
   },
   "packages": {
     "@babel/runtime": ["@babel/runtime@7.28.4", "", {}, "sha512-Q/N6JNWvIvPnLDvjlE1OUBLPQHH6l3CltCEsHIujp45zQUSSh8K+gHnaEX45yAT1nyngnINhvWtzN+Nb9D8RAQ=="],
@@ -210,6 +236,10 @@
     "@sylphx/synth": ["@sylphx/synth@workspace:packages/synth"],
 
     "@sylphx/synth-md": ["@sylphx/synth-md@workspace:packages/synth-md"],
+
+    "@sylphx/synth-md-katex": ["@sylphx/synth-md-katex@workspace:packages/synth-md-katex"],
+
+    "@sylphx/synth-md-mermaid": ["@sylphx/synth-md-mermaid@workspace:packages/synth-md-mermaid"],
 
     "@types/debug": ["@types/debug@4.1.12", "", { "dependencies": { "@types/ms": "*" } }, "sha512-vIChWdVG3LG1SMxEvI/AK+FWJthlrqlTu7fbrlywTkkaONwk/UAGaULXRlf8vkzFBLVm0zkMdCquhL5aOjhXPQ=="],
 
