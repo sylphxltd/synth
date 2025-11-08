@@ -1,7 +1,7 @@
 /**
  * Markdown Parser Benchmarks
  *
- * Compare Synth's incremental Markdown parser against remark/unified.
+ * Compare @sylphx/ast's incremental Markdown parser against remark/unified.
  *
  * Goal: Demonstrate 50-100x faster parsing and 10-100x faster incremental parsing.
  */
@@ -39,7 +39,7 @@ const largeDoc = Array(200)
 const remarkProcessor = unified().use(remarkParse)
 
 describe('Markdown Parser - Small Document (~100 lines)', () => {
-  bench('Synth parse', () => {
+  bench('sylph parse', () => {
     parseMarkdown(smallDoc)
   })
 
@@ -49,7 +49,7 @@ describe('Markdown Parser - Small Document (~100 lines)', () => {
 })
 
 describe('Markdown Parser - Medium Document (~500 lines)', () => {
-  bench('Synth parse', () => {
+  bench('sylph parse', () => {
     parseMarkdown(mediumDoc)
   })
 
@@ -59,7 +59,7 @@ describe('Markdown Parser - Medium Document (~500 lines)', () => {
 })
 
 describe('Markdown Parser - Large Document (~2000 lines)', () => {
-  bench('Synth parse', () => {
+  bench('sylph parse', () => {
     parseMarkdown(largeDoc)
   })
 
@@ -72,8 +72,8 @@ describe('Incremental Parsing - Medium Document', () => {
   const parser = new IncrementalMarkdownParser()
   parser.parse(mediumDoc)
 
-  bench('Synth incremental (1% edit)', () => {
-    const editedDoc = mediumDoc.replace('Hello World', 'Hello Synth')
+  bench('sylph incremental (1% edit)', () => {
+    const editedDoc = mediumDoc.replace('Hello World', 'Hello sylph')
     parser.parseIncremental(editedDoc, {
       startByte: 2,
       oldEndByte: 13,
@@ -85,7 +85,7 @@ describe('Incremental Parsing - Medium Document', () => {
   })
 
   bench('Remark full re-parse (1% edit)', () => {
-    const editedDoc = mediumDoc.replace('Hello World', 'Hello Synth')
+    const editedDoc = mediumDoc.replace('Hello World', 'Hello sylph')
     remarkProcessor.parse(editedDoc)
   })
 })
@@ -94,8 +94,8 @@ describe('Incremental Parsing - Large Document', () => {
   const parser = new IncrementalMarkdownParser()
   parser.parse(largeDoc)
 
-  bench('Synth incremental (0.1% edit)', () => {
-    const editedDoc = largeDoc.replace('Hello World', 'Hello Synth')
+  bench('sylph incremental (0.1% edit)', () => {
+    const editedDoc = largeDoc.replace('Hello World', 'Hello sylph')
     parser.parseIncremental(editedDoc, {
       startByte: 2,
       oldEndByte: 13,
@@ -107,7 +107,7 @@ describe('Incremental Parsing - Large Document', () => {
   })
 
   bench('Remark full re-parse (0.1% edit)', () => {
-    const editedDoc = largeDoc.replace('Hello World', 'Hello Synth')
+    const editedDoc = largeDoc.replace('Hello World', 'Hello sylph')
     remarkProcessor.parse(editedDoc)
   })
 })
@@ -115,7 +115,7 @@ describe('Incremental Parsing - Large Document', () => {
 describe('Real-world Scenario: Live Preview', () => {
   const doc = mediumDoc
 
-  bench('Synth (10 incremental edits)', () => {
+  bench('sylph (10 incremental edits)', () => {
     const parser = new IncrementalMarkdownParser()
     parser.parse(doc)
 
@@ -143,7 +143,7 @@ describe('Real-world Scenario: Live Preview', () => {
 describe('Real-world Scenario: Typing Simulation', () => {
   const doc = '# Hello\n\nWorld'
 
-  bench('Synth (add 100 characters)', () => {
+  bench('sylph (add 100 characters)', () => {
     const parser = new IncrementalMarkdownParser()
     parser.parse(doc)
 

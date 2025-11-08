@@ -1,7 +1,7 @@
 /**
  * Detailed Profiling Benchmarks
  *
- * Comprehensive performance analysis suite for the Synth Markdown parser.
+ * Comprehensive performance analysis suite for the @sylphx/ast Markdown parser.
  *
  * Benchmarks:
  * 1. Parser phases (tokenization vs AST building)
@@ -223,7 +223,7 @@ describe('Profiling: Tables', () => {
     remark().parse(tableheavyDoc)
   })
 
-  bench('Synth - table heavy', () => {
+  bench('sylph - table heavy', () => {
     const parser = new UltraOptimizedMarkdownParser()
     parser.parse(tableheavyDoc)
   })
@@ -234,7 +234,7 @@ describe('Profiling: Lists', () => {
     remark().parse(listheavyDoc)
   })
 
-  bench('Synth - list heavy', () => {
+  bench('sylph - list heavy', () => {
     const parser = new UltraOptimizedMarkdownParser()
     parser.parse(listheavyDoc)
   })
@@ -245,7 +245,7 @@ describe('Profiling: Code Blocks', () => {
     remark().parse(codeHeavyDoc)
   })
 
-  bench('Synth - code heavy', () => {
+  bench('sylph - code heavy', () => {
     const parser = new UltraOptimizedMarkdownParser()
     parser.parse(codeHeavyDoc)
   })
@@ -256,7 +256,7 @@ describe('Profiling: Inline Formatting', () => {
     remark().parse(inlineHeavyDoc)
   })
 
-  bench('Synth - inline heavy', () => {
+  bench('sylph - inline heavy', () => {
     const parser = new UltraOptimizedMarkdownParser()
     parser.parse(inlineHeavyDoc)
   })
@@ -280,7 +280,7 @@ describe('Profiling: Document Size Scaling', () => {
       remark().parse(doc)
     })
 
-    bench(`Synth - ${name}`, () => {
+    bench(`sylph - ${name}`, () => {
       const parser = new UltraOptimizedMarkdownParser()
       parser.parse(doc)
     })
@@ -348,12 +348,12 @@ describe('Profiling: Real-World Document', () => {
     remark().parse(realWorldDoc)
   })
 
-  bench('Synth - README-sized (10KB)', () => {
+  bench('sylph - README-sized (10KB)', () => {
     const parser = new UltraOptimizedMarkdownParser()
     parser.parse(realWorldDoc)
   })
 
-  bench('Synth with index - README-sized', () => {
+  bench('sylph with index - README-sized', () => {
     const parser = new UltraOptimizedMarkdownParser()
     parser.parse(realWorldDoc, { buildIndex: true })
   })

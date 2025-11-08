@@ -3,8 +3,8 @@
  *
  * Compare:
  * - Remark (baseline)
- * - Synth Optimized (9-11x)
- * - Synth Ultra-Optimized (target 20-30x)
+ * - sylph Optimized (9-11x)
+ * - sylph Ultra-Optimized (target 20-30x)
  */
 
 import { bench, describe } from 'vitest'
@@ -75,12 +75,12 @@ describe('Ultra-Optimization: Small Documents', () => {
     remark().parse(smallDoc)
   })
 
-  bench('Synth Optimized', () => {
+  bench('sylph Optimized', () => {
     const parser = new OptimizedMarkdownParser()
     parser.parse(smallDoc)
   })
 
-  bench('Synth Ultra-Optimized', () => {
+  bench('sylph Ultra-Optimized', () => {
     const parser = new UltraOptimizedMarkdownParser()
     parser.parse(smallDoc)
   })
@@ -91,12 +91,12 @@ describe('Ultra-Optimization: Medium Documents', () => {
     remark().parse(mediumDoc)
   })
 
-  bench('Synth Optimized', () => {
+  bench('sylph Optimized', () => {
     const parser = new OptimizedMarkdownParser()
     parser.parse(mediumDoc)
   })
 
-  bench('Synth Ultra-Optimized', () => {
+  bench('sylph Ultra-Optimized', () => {
     const parser = new UltraOptimizedMarkdownParser()
     parser.parse(mediumDoc)
   })
@@ -107,12 +107,12 @@ describe('Ultra-Optimization: Large Documents', () => {
     remark().parse(largeDoc)
   })
 
-  bench('Synth Optimized', () => {
+  bench('sylph Optimized', () => {
     const parser = new OptimizedMarkdownParser()
     parser.parse(largeDoc)
   })
 
-  bench('Synth Ultra-Optimized', () => {
+  bench('sylph Ultra-Optimized', () => {
     const parser = new UltraOptimizedMarkdownParser()
     parser.parse(largeDoc)
   })
@@ -123,12 +123,12 @@ describe('Ultra-Optimization: Blog Posts (1000 lines)', () => {
     remark().parse(blogPost)
   })
 
-  bench('Synth Optimized', () => {
+  bench('sylph Optimized', () => {
     const parser = new OptimizedMarkdownParser()
     parser.parse(blogPost)
   })
 
-  bench('Synth Ultra-Optimized', () => {
+  bench('sylph Ultra-Optimized', () => {
     const parser = new UltraOptimizedMarkdownParser()
     parser.parse(blogPost)
   })
@@ -139,12 +139,12 @@ describe('Ultra-Optimization: Documentation (5000 lines)', () => {
     remark().parse(documentation)
   })
 
-  bench('Synth Optimized', () => {
+  bench('sylph Optimized', () => {
     const parser = new OptimizedMarkdownParser()
     parser.parse(documentation)
   })
 
-  bench('Synth Ultra-Optimized', () => {
+  bench('sylph Ultra-Optimized', () => {
     const parser = new UltraOptimizedMarkdownParser()
     parser.parse(documentation)
   })

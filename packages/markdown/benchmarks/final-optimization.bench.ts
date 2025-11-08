@@ -2,8 +2,8 @@
  * Final Optimization Benchmarks
  *
  * Compare:
- * 1. Original Synth parser
- * 2. Optimized Synth parser
+ * 1. Original sylph parser
+ * 2. Optimized sylph parser
  * 3. Remark/Unified
  *
  * Goal: Demonstrate 20-30x improvement over remark
@@ -40,12 +40,12 @@ describe('Final Optimization - Small Document', () => {
     remarkProcessor.parse(smallDoc)
   })
 
-  bench('Synth Original', () => {
+  bench('sylph Original', () => {
     const parser = new IncrementalMarkdownParser()
     parser.parse(smallDoc)
   })
 
-  bench('Synth Optimized', () => {
+  bench('sylph Optimized', () => {
     const parser = new OptimizedMarkdownParser()
     parser.parse(smallDoc)
   })
@@ -56,12 +56,12 @@ describe('Final Optimization - Medium Document', () => {
     remarkProcessor.parse(mediumDoc)
   })
 
-  bench('Synth Original', () => {
+  bench('sylph Original', () => {
     const parser = new IncrementalMarkdownParser()
     parser.parse(mediumDoc)
   })
 
-  bench('Synth Optimized', () => {
+  bench('sylph Optimized', () => {
     const parser = new OptimizedMarkdownParser()
     parser.parse(mediumDoc)
   })
@@ -72,12 +72,12 @@ describe('Final Optimization - Large Document', () => {
     remarkProcessor.parse(largeDoc)
   })
 
-  bench('Synth Original', () => {
+  bench('sylph Original', () => {
     const parser = new IncrementalMarkdownParser()
     parser.parse(largeDoc)
   })
 
-  bench('Synth Optimized', () => {
+  bench('sylph Optimized', () => {
     const parser = new OptimizedMarkdownParser()
     parser.parse(largeDoc)
   })
@@ -90,7 +90,7 @@ describe('Real-world: Blog Post (1000 lines)', () => {
     remarkProcessor.parse(blogPost)
   })
 
-  bench('Synth Optimized parse', () => {
+  bench('sylph Optimized parse', () => {
     const parser = new OptimizedMarkdownParser()
     parser.parse(blogPost)
   })
@@ -103,7 +103,7 @@ describe('Real-world: Documentation (5000 lines)', () => {
     remarkProcessor.parse(docs)
   })
 
-  bench('Synth Optimized parse', () => {
+  bench('sylph Optimized parse', () => {
     const parser = new OptimizedMarkdownParser()
     parser.parse(docs)
   })

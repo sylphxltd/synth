@@ -1,7 +1,7 @@
 /**
  * Incremental Markdown Parser
  *
- * Parses Markdown tokens into Synth AST with support for incremental re-parsing.
+ * Parses Markdown tokens into @sylphx/ast AST with support for incremental re-parsing.
  * Integrates with node pool and query index for maximum performance.
  */
 
