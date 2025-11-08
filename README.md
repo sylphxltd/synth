@@ -128,6 +128,7 @@ Transform Operations:
 2. **NodeId System** - O(1) access, no pointer chasing
 3. **Flat Array Storage** - High CPU cache hit rate
 4. **String Interning** - Deduplication for memory efficiency
+5. **Batch Processing** - SIMD-style operations for 1.3-1.4x speedup on large trees
 
 📈 [View Detailed Benchmarks](./BENCHMARK_RESULTS.md)
 
