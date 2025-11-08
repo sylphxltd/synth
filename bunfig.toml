@@ -1,0 +1,9 @@
+# Bun workspace configuration
+
+[install]
+# Use workspaces
+workspace = true
+
+[install.scopes]
+# Workspace packages
+"@sylphx" = "workspace:*"

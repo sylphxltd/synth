@@ -13,9 +13,6 @@
       "dependsOn": ["build"],
       "cache": false
     },
-    "lint": {
-      "outputs": []
-    },
     "dev": {
       "cache": false,
       "persistent": true
