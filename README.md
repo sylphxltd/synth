@@ -290,7 +290,7 @@ const minified = minify('function hello() { return 42; }', { mangle: true })
 // → "function a(){return 42;}"
 ```
 
-**Total: 802 tests across all packages, 100% pass rate** 🎉
+**Total: 849 tests across all packages, 100% pass rate** 🎉
 
 ## 🔧 Development Strategy
 
@@ -356,7 +356,7 @@ We strategically balance **full ownership** of core technology with **leveraging
   - Name mangling algorithm
   - 35 tests, 100% coverage
 
-**Total In-House:** 9/16 packages, 419 tests
+**Total In-House:** 9/17 packages, 419 tests
 
 #### ⚠️ Strategic Dependencies (Conversion Layer)
 
@@ -422,8 +422,8 @@ const synth = convertTreeSitterToSynth(tsTree)
 
 ```
 In-House Code:     419 tests (HTML, Markdown, JSON, CSS, TOML, INI, Format, Minify)
-Conversion Layer:  383 tests (JS, YAML, Python, Go, Rust, SQL, GraphQL)
-Total:            802 tests, 100% pass rate
+Conversion Layer:  430 tests (JS, YAML, Python, Go, Rust, SQL, GraphQL, XML)
+Total:            849 tests, 100% pass rate
 ```
 
 ## 🚀 Roadmap: Upcoming Languages
@@ -539,9 +539,27 @@ const synth = convertGraphQLToSynth(ast)
 
 ### Phase 8: Markup & Templates
 
-**@sylphx/synth-xml** - XML Parser 🚧
-- Full XML 1.0 support
-- **Target:** Hand-written (similar to HTML parser)
+**@sylphx/synth-xml** - XML Parser
+```typescript
+// Third-party: fast-xml-parser (high-performance, battle-tested)
+const parsed = xmlParser.parse(xml, { preserveOrder: true })
+
+// Our code: fast-xml-parser → Synth AST conversion
+const synth = convertXMLToSynth(parsed)
+```
+
+**Why fast-xml-parser?**
+- ❌ Writing XML parser: 100+ hours, complex spec, edge cases
+- ✅ fast-xml-parser: High-performance (10x faster), battle-tested
+- **Our value:** Universal AST conversion, plugin system, cross-language tools
+
+**Features:**
+- ✅ Full XML 1.0 support (elements, attributes, text, CDATA, comments)
+- ✅ Namespaces (default, prefixed, multiple)
+- ✅ Entity references and special characters
+- ✅ Processing instructions, XML declarations
+- ✅ 47 tests, 100% pass rate
+- Use cases: Config parsing, RSS/SVG, SOAP, build systems (Maven, Android)
 
 **@sylphx/synth-jsx** - JSX/TSX Parser 🚧
 - React component parsing
