@@ -40,6 +40,20 @@
         "vitest": "^2.0.0",
       },
     },
+    "packages/synth-js": {
+      "name": "@sylphx/synth-js",
+      "version": "0.1.0",
+      "dependencies": {
+        "@sylphx/synth": "workspace:*",
+        "acorn": "^8.12.1",
+        "acorn-typescript": "^1.4.13",
+      },
+      "devDependencies": {
+        "@types/node": "^22.0.0",
+        "typescript": "^5.6.0",
+        "vitest": "^2.0.0",
+      },
+    },
     "packages/synth-md": {
       "name": "@sylphx/synth-md",
       "version": "0.1.0",
@@ -262,6 +276,8 @@
 
     "@sylphx/synth-html": ["@sylphx/synth-html@workspace:packages/synth-html"],
 
+    "@sylphx/synth-js": ["@sylphx/synth-js@workspace:packages/synth-js"],
+
     "@sylphx/synth-md": ["@sylphx/synth-md@workspace:packages/synth-md"],
 
     "@sylphx/synth-md-gfm": ["@sylphx/synth-md-gfm@workspace:packages/synth-md-gfm"],
@@ -299,6 +315,10 @@
     "@vitest/spy": ["@vitest/spy@2.1.9", "", { "dependencies": { "tinyspy": "^3.0.2" } }, "sha512-E1B35FwzXXTs9FHNK6bDszs7mtydNi5MIfUWpceJ8Xbfb1gBMscAnwLbEu+B44ed6W3XjL9/ehLPHR1fkf1KLQ=="],
 
     "@vitest/utils": ["@vitest/utils@2.1.9", "", { "dependencies": { "@vitest/pretty-format": "2.1.9", "loupe": "^3.1.2", "tinyrainbow": "^1.2.0" } }, "sha512-v0psaMSkNJ3A2NMrUEHFRzJtDPFn+/VWZ5WxImB21T9fjucJRmS7xCS3ppEnARb9y11OAzaD+P2Ps+b+BGX5iQ=="],
+
+    "acorn": ["acorn@8.15.0", "", { "bin": { "acorn": "bin/acorn" } }, "sha512-NZyJarBfL7nWwIq+FDL6Zp/yHEhePMNnnJ0y3qfieCrmNvYct8uvtiV41UvlSe6apAfk0fY1FbWx+NwfmpvtTg=="],
+
+    "acorn-typescript": ["acorn-typescript@1.4.13", "", { "peerDependencies": { "acorn": ">=8.9.0" } }, "sha512-xsc9Xv0xlVfwp2o7sQ+GCQ1PgbkdcpWdTzrwXxO3xDMTAywVS3oXVOcOHuRjAPkS4P9b+yc/qNF15460v+jp4Q=="],
 
     "ansi-colors": ["ansi-colors@4.1.3", "", {}, "sha512-/6w/C21Pm1A7aZitlI5Ni/2J6FFQN8i1Cvz3kHABAAbw93v/NlvKdVOqz7CCWz/3iv/JplRSEEZ83XION15ovw=="],
 
