@@ -1,0 +1,61 @@
+{
+  "name": "@sylphx/ast-markdown",
+  "version": "2.0.0",
+  "description": "High-performance Markdown parser - 26-42x faster than remark",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "bench": "vitest bench",
+    "lint": "eslint src/**/*.ts"
+  },
+  "keywords": [
+    "markdown",
+    "parser",
+    "ast",
+    "gfm",
+    "commonmark",
+    "fast",
+    "performance"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@sylphx/ast-core": "workspace:*",
+    "@sylphx/ast-optimizations": "workspace:*",
+    "@sylphx/ast-plugin-system": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.0.0",
+    "mdast-util-to-string": "^4.0.0",
+    "rehype-stringify": "^10.0.1",
+    "remark": "^15.0.1",
+    "remark-parse": "^11.0.0",
+    "remark-rehype": "^11.1.2",
+    "remark-stringify": "^11.0.0",
+    "typescript": "^5.6.0",
+    "unified": "^11.0.5",
+    "vitest": "^2.0.0"
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

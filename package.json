@@ -1,29 +1,26 @@
 {
-  "name": "@sylphx/synth",
-  "version": "0.1.0",
+  "name": "@sylphx/ast",
+  "version": "2.0.0",
   "description": "The world's fastest AST processor - 50-3000x faster than unified",
   "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    }
-  },
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "packages/plugins/*"
+  ],
   "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch",
-    "test": "vitest",
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "test": "turbo run test",
     "test:watch": "vitest --watch",
-    "bench": "vitest bench",
+    "bench": "turbo run bench",
     "bench:all": "tsx scripts/bench-all.ts all",
     "bench:compare": "tsx scripts/bench-all.ts compare",
     "bench:profile": "tsx scripts/bench-all.ts profile",
     "bench:memory": "tsx scripts/bench-all.ts memory",
     "bench:list": "tsx scripts/bench-all.ts list",
-    "lint": "eslint src/**/*.ts",
-    "format": "prettier --write \"src/**/*.ts\""
+    "lint": "turbo run lint",
+    "format": "prettier --write \"packages/**/*.ts\""
   },
   "keywords": [
     "ast",
@@ -44,6 +41,7 @@
     "eslint": "^9.0.0",
     "prettier": "^3.0.0",
     "tsx": "^4.20.6",
+    "turbo": "^2.0.0",
     "typescript": "^5.6.0",
     "vitest": "^2.0.0"
   },
@@ -58,5 +56,6 @@
   },
   "engines": {
     "node": ">=18.0.0"
-  }
+  },
+  "packageManager": "pnpm@10.17.1"
 }
