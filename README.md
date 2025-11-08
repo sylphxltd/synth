@@ -333,6 +333,12 @@ We strategically balance **full ownership** of core technology with **leveraging
   - 49 tests, 100% coverage
   - **Zero parsing dependencies**
 
+- **@sylphx/synth-toml** - TOML 1.0 parser
+  - Hand-written tokenizer + parser
+  - Full TOML 1.0 spec (tables, arrays, all data types)
+  - 38 tests, 100% coverage
+  - **Zero parsing dependencies**
+
 **Code Generation Tools:**
 - **@sylphx/synth-js-format** - JavaScript formatter
   - Custom Printer class
@@ -344,7 +350,7 @@ We strategically balance **full ownership** of core technology with **leveraging
   - Name mangling algorithm
   - 35 tests, 100% coverage
 
-**Total In-House:** 7/9 packages, 344 tests
+**Total In-House:** 8/10 packages, 382 tests
 
 #### ⚠️ Strategic Dependencies (Conversion Layer)
 
@@ -381,9 +387,9 @@ const synth = convertYAMLToSynth(doc)
 ### Test Coverage Breakdown
 
 ```
-In-House Code:     344 tests (HTML, Markdown, JSON, CSS, Format, Minify)
+In-House Code:     382 tests (HTML, Markdown, JSON, CSS, TOML, Format, Minify)
 Conversion Layer:  139 tests (JS, YAML)
-Total:            483 tests, 100% pass rate
+Total:            521 tests, 100% pass rate
 ```
 
 ## 🚀 Roadmap: Upcoming Languages
@@ -397,12 +403,14 @@ Total:            483 tests, 100% pass rate
 - ✅ 49 tests, 100% pass rate
 - Use cases: Style analysis, CSS-in-JS, optimization, linting
 
-### Phase 5: Configuration Formats
+### Phase 5: Configuration Formats ✅ **IN PROGRESS**
 
-**@sylphx/synth-toml** - TOML Parser 🚧
-- TOML 1.0 spec
-- Rust/Cargo config files
-- **Target:** Hand-written parser (simple grammar)
+**@sylphx/synth-toml** - TOML Parser ✅
+- ✅ TOML 1.0 spec compliance
+- ✅ Hand-written tokenizer + parser (zero dependencies)
+- ✅ Tables, arrays, all data types
+- ✅ 38 tests, 100% pass rate
+- Use cases: Rust Cargo.toml, Python pyproject.toml, config files
 
 **@sylphx/synth-ini** - INI Parser 🚧
 - Windows config files
