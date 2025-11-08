@@ -201,6 +201,16 @@ export interface HTMLBlockToken extends BaseToken {
   content: string
 }
 
+/**
+ * Link reference definition token ([ref]: url "title")
+ */
+export interface LinkReferenceToken extends BaseToken {
+  type: 'linkReference'
+  label: string
+  url: string
+  title?: string
+}
+
 // ============================================================================
 // Union Type
 // ============================================================================
@@ -218,6 +228,7 @@ export type Token =
   | BlockquoteToken
   | HorizontalRuleToken
   | BlankLineToken
+  | LinkReferenceToken
   // Inline tokens
   | TextToken
   | EmphasisToken
@@ -246,6 +257,7 @@ export type BlockToken =
   | BlankLineToken
   | TableToken
   | HTMLBlockToken
+  | LinkReferenceToken
 
 /**
  * Inline-level tokens only
@@ -280,6 +292,7 @@ export function isBlockToken(token: Token): token is BlockToken {
     'blankLine',
     'table',
     'htmlBlock',
+    'linkReference',
   ].includes(token.type)
 }
 

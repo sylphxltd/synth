@@ -21,6 +21,7 @@ import type {
   BlankLineToken,
   TableToken,
   HTMLBlockToken,
+  LinkReferenceToken,
 } from './tokens.js'
 import { createPosition, createTokenPosition } from './tokens.js'
 
@@ -155,6 +156,17 @@ export class UltraOptimizedTokenizer {
           tokens.push(result.token)
           offset = result.nextOffset
           lineIndex = result.nextLine
+          continue
+        }
+      }
+
+      // Link reference definition detection
+      if (firstChar === '[') {
+        const token = this.tryLinkReference(text, lineStart, lineEnd, lineIndex, offset)
+        if (token) {
+          tokens.push(token)
+          offset = lineEnd + 1
+          lineIndex++
           continue
         }
       }
@@ -1178,6 +1190,105 @@ export class UltraOptimizedTokenizer {
     }
 
     return true
+  }
+
+  /**
+   * Try to parse link reference definition: [label]: url "title"
+   */
+  private tryLinkReference(
+    text: string,
+    lineStart: number,
+    lineEnd: number,
+    lineIndex: number,
+    offset: number
+  ): LinkReferenceToken | null {
+    if (text[lineStart] !== '[') return null
+
+    let i = lineStart + 1
+
+    // Find closing ]
+    while (i < lineEnd && text[i] !== ']') {
+      i++
+    }
+
+    if (i >= lineEnd) return null
+
+    const label = text.slice(lineStart + 1, i).toLowerCase().trim()
+    if (label.length === 0) return null
+
+    i++ // Skip ]
+
+    // Must have :
+    if (i >= lineEnd || text[i] !== ':') return null
+    i++ // Skip :
+
+    // Skip whitespace
+    while (i < lineEnd && (text[i] === ' ' || text[i] === '\t')) {
+      i++
+    }
+
+    if (i >= lineEnd) return null
+
+    // Parse URL
+    const urlStart = i
+
+    // URL can be in angle brackets or bare
+    let url: string
+    if (text[i] === '<') {
+      i++ // Skip <
+      const urlContentStart = i
+      while (i < lineEnd && text[i] !== '>') {
+        i++
+      }
+      if (i >= lineEnd) return null
+      url = text.slice(urlContentStart, i)
+      i++ // Skip >
+    } else {
+      // Bare URL - until whitespace or end
+      while (i < lineEnd && text[i] !== ' ' && text[i] !== '\t') {
+        i++
+      }
+      url = text.slice(urlStart, i)
+    }
+
+    if (url.length === 0) return null
+
+    // Skip whitespace
+    while (i < lineEnd && (text[i] === ' ' || text[i] === '\t')) {
+      i++
+    }
+
+    // Parse optional title
+    let title: string | undefined = undefined
+    if (i < lineEnd) {
+      const quoteChar = text[i]
+      if (quoteChar === '"' || quoteChar === "'" || quoteChar === '(') {
+        const closingQuote = quoteChar === '(' ? ')' : quoteChar
+        i++ // Skip opening quote
+        const titleStart = i
+        while (i < lineEnd && text[i] !== closingQuote) {
+          i++
+        }
+        if (i < lineEnd) {
+          title = text.slice(titleStart, i)
+          i++ // Skip closing quote
+        }
+      }
+    }
+
+    const raw = text.slice(lineStart, lineEnd)
+
+    return {
+      type: 'linkReference',
+      label,
+      url,
+      title,
+      raw,
+      position: createTokenPosition(
+        createPosition(lineIndex, 0, offset),
+        createPosition(lineIndex, lineEnd - lineStart, offset + (lineEnd - lineStart))
+      ),
+    }
   }
 }
 
