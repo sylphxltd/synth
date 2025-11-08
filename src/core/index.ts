@@ -38,3 +38,18 @@ export {
   batchMap,
   batchFilter,
 } from './batch-processor.js'
+
+export type { PoolConfig, PoolStats } from './node-pool.js'
+
+export {
+  NodePoolManager,
+  globalNodePool,
+  createNodePool,
+} from './node-pool.js'
+
+export type { QuerySelector, QueryPredicate, QueryObject, IndexStats } from './query-index.js'
+
+export {
+  ASTIndex,
+  createIndex,
+} from './query-index.js'
