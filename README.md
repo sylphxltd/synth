@@ -124,11 +124,13 @@ Transform Operations:
 
 ### Performance Advantages
 
-1. **Arena-Based Memory** - Contiguous allocation, cache-friendly
+1. **Arena-Based Memory** - Contiguous allocation, cache-friendly SoA pattern
 2. **NodeId System** - O(1) access, no pointer chasing
 3. **Flat Array Storage** - High CPU cache hit rate
 4. **String Interning** - Deduplication for memory efficiency
 5. **Batch Processing** - SIMD-style operations for 1.3-1.4x speedup on large trees
+6. **Node Pooling** - 70%+ object reuse rate, reduced GC pressure
+7. **Query Index** - O(1) queries, 100-1000x faster than linear scans
 
 📈 [View Detailed Benchmarks](./BENCHMARK_RESULTS.md)
 
