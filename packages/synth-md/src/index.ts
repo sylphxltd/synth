@@ -26,7 +26,8 @@ export { IncrementalMarkdownParser, detectEdit, calculateEditDistance, shouldUse
 export type { Edit } from './incremental-parser.js'
 
 // Export streaming parser
-export { StreamingMarkdownParser } from './streaming-parser.js'
+export { StreamingMarkdownParser, parseStream, parseWithProgress } from './streaming-parser.js'
+export type { StreamingOptions } from './streaming-parser.js'
 
 // Export plugin system
 export * from './plugin.js'

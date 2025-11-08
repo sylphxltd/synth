@@ -124,15 +124,29 @@ const updated = incParser.update(newText, edit)  // 10-100x faster
 ### Streaming
 
 ```typescript
+import { parseStream, parseWithProgress } from '@sylphx/synth-md'
+import { createReadStream } from 'fs'
+
+// From file stream
+const stream = createReadStream('large.md', { encoding: 'utf8' })
+const tree = await parseStream(stream)
+
+// With progress tracking
+const tree = await parseWithProgress(largeText, (progress) => {
+  console.log(`Parsed ${progress.percent}%`)
+})
+
+// Manual streaming
 import { StreamingMarkdownParser } from '@sylphx/synth-md'
 
-const stream = new StreamingMarkdownParser()
+const parser = new StreamingMarkdownParser()
 
-for (const chunk of chunks) {
-  stream.feed(chunk)
-}
+parser.on('node', (node) => console.log('Node:', node.type))
+parser.on('end', (tree) => console.log('Done:', tree))
 
-const tree = stream.end()
+parser.write('# Hello\n')
+parser.write('\nWorld')
+await parser.end()
 ```
 
 ## API
@@ -165,6 +179,27 @@ const parser = createParser()
   .use(plugin2)
 
 const tree = parser.parse(text)
+```
+
+#### `parseStream(stream: AsyncIterable<string>, options?: StreamingOptions): Promise<Tree>`
+
+Parse from a readable stream (ideal for large files).
+
+```typescript
+import { createReadStream } from 'fs'
+
+const stream = createReadStream('large.md', { encoding: 'utf8' })
+const tree = await parseStream(stream)
+```
+
+#### `parseWithProgress(text: string, onProgress: ProgressCallback, options?: StreamingOptions): Promise<Tree>`
+
+Parse with progress tracking.
+
+```typescript
+const tree = await parseWithProgress(text, (progress) => {
+  console.log(`${progress.percent}% complete (${progress.processed}/${progress.total} bytes)`)
+})
 ```
 
 ### Parser Class
