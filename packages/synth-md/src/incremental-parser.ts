@@ -6,7 +6,7 @@
  */
 
 import type { Tree, NodeId } from '@sylphx/synth'
-import { Parser, type ParseOptions } from './ultra-optimized-parser.js'
+import { Parser, type ParseOptions } from './parser.js'
 import type { ASTIndex } from '@sylphx/synth'
 
 /**

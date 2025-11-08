@@ -13,7 +13,7 @@
 
 import { EventEmitter } from 'events'
 import type { Tree, BaseNode } from '@sylphx/synth'
-import { Parser, type ParseOptions } from './ultra-optimized-parser.js'
+import { Parser, type ParseOptions } from './parser.js'
 
 /**
  * Streaming parser options

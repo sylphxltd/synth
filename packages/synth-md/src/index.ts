@@ -18,11 +18,8 @@ export * from './types.js'
 export * from './tokens.js'
 
 // Export main parser
-export { Parser, createParser, parse } from './ultra-optimized-parser.js'
-export type { ParseOptions } from './ultra-optimized-parser.js'
-
-// Backward compatibility
-export { UltraOptimizedMarkdownParser, createUltraOptimizedParser } from './ultra-optimized-parser.js'
+export { Parser, createParser, parse } from './parser.js'
+export type { ParseOptions } from './parser.js'
 
 // Export incremental parser
 export { IncrementalMarkdownParser, detectEdit, calculateEditDistance, shouldUseIncremental } from './incremental-parser.js'
@@ -35,8 +32,8 @@ export { StreamingMarkdownParser } from './streaming-parser.js'
 export * from './plugin.js'
 
 // Export tokenizers (for advanced use)
-export { UltraOptimizedTokenizer } from './ultra-optimized-tokenizer.js'
-export { UltraOptimizedInlineTokenizer } from './ultra-optimized-inline-tokenizer.js'
+export { Tokenizer } from './tokenizer.js'
+export { InlineTokenizer } from './inline-tokenizer.js'
 export { BatchTokenizer } from './batch-tokenizer.js'
 
 // Export node pool

@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
-import { createUltraOptimizedTokenizer } from './ultra-optimized-tokenizer.js'
+import { createTokenizer } from './tokenizer.js'
 
-const tokenizer = createUltraOptimizedTokenizer()
+const tokenizer = createTokenizer()
 
 describe('CommonMark Edge Cases', () => {
   describe('ATX Headings', () => {

@@ -6,7 +6,7 @@
  */
 
 import type { BlockToken } from './tokens.js'
-import { UltraOptimizedTokenizer } from './ultra-optimized-tokenizer.js'
+import { Tokenizer } from './tokenizer.js'
 
 /**
  * Batch size for SIMD-style processing
@@ -36,11 +36,11 @@ interface LineMetadata {
  * Batch Tokenizer that processes multiple lines at once
  */
 export class BatchTokenizer {
-  private fallbackTokenizer: UltraOptimizedTokenizer
+  private fallbackTokenizer: Tokenizer
   private batchSize: number
 
   constructor(batchSize: number = DEFAULT_BATCH_SIZE) {
-    this.fallbackTokenizer = new UltraOptimizedTokenizer()
+    this.fallbackTokenizer = new Tokenizer()
     this.batchSize = batchSize
   }
 
