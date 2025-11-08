@@ -290,7 +290,7 @@ const minified = minify('function hello() { return 42; }', { mangle: true })
 // → "function a(){return 42;}"
 ```
 
-**Total: 346 tests across all packages, 100% pass rate** 🎉
+**Total: 695 tests across all packages, 100% pass rate** 🎉
 
 ## 🔧 Development Strategy
 
@@ -356,7 +356,7 @@ We strategically balance **full ownership** of core technology with **leveraging
   - Name mangling algorithm
   - 35 tests, 100% coverage
 
-**Total In-House:** 9/13 packages, 419 tests
+**Total In-House:** 9/14 packages, 419 tests
 
 #### ⚠️ Strategic Dependencies (Conversion Layer)
 
@@ -422,8 +422,8 @@ const synth = convertTreeSitterToSynth(tsTree)
 
 ```
 In-House Code:     419 tests (HTML, Markdown, JSON, CSS, TOML, INI, Format, Minify)
-Conversion Layer:  223 tests (JS, YAML, Python, Go)
-Total:            642 tests, 100% pass rate
+Conversion Layer:  276 tests (JS, YAML, Python, Go, Rust)
+Total:            695 tests, 100% pass rate
 ```
 
 ## 🚀 Roadmap: Upcoming Languages
@@ -468,10 +468,28 @@ Total:            642 tests, 100% pass rate
 - ✅ 45 tests, 100% pass rate
 - Use cases: Code analysis, linting, documentation, concurrency analysis
 
-**@sylphx/synth-rust** - Rust Parser 🚧
-- Rust language support
-- **Strategy:** Leverage `syn` crate via WASM or rust-parser-js
-- Our value: Universal tooling
+**@sylphx/synth-rust** - Rust Parser
+```typescript
+// Third-party: tree-sitter-rust (used by VS Code, Atom, GitHub)
+const tsTree = treeSitter.parse(code)
+
+// Our code: tree-sitter CST → Synth AST conversion
+const synth = convertTreeSitterToSynth(tsTree)
+```
+
+**Why tree-sitter-rust?**
+- ❌ Writing Rust parser: 200+ hours, complex grammar, constant language updates
+- ✅ tree-sitter: Battle-tested, incremental parsing, error recovery
+- **Our value:** Universal AST conversion, plugin system, cross-language tools
+
+**Features:**
+- ✅ Full Rust support (structs, enums, traits, generics)
+- ✅ Ownership and lifetimes (references, borrowing)
+- ✅ Pattern matching and destructuring
+- ✅ Async/await support
+- ✅ Error handling (Result, Option, ?)
+- ✅ 53 tests, 100% pass rate
+- Use cases: Code analysis, linting, documentation, refactoring
 
 ### Phase 7: Query Languages
 
