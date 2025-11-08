@@ -1,0 +1,36 @@
+{
+  "name": "@sylphx/synth-yaml",
+  "version": "0.1.0",
+  "description": "YAML parser using Synth's universal AST",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": [
+    "yaml",
+    "parser",
+    "ast",
+    "synth",
+    "tree"
+  ],
+  "author": "SylphX",
+  "license": "MIT",
+  "dependencies": {
+    "@sylphx/synth": "workspace:*",
+    "yaml": "^2.3.4"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.0"
+  }
+}
