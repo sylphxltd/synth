@@ -290,7 +290,7 @@ const minified = minify('function hello() { return 42; }', { mangle: true })
 // → "function a(){return 42;}"
 ```
 
-**Total: 695 tests across all packages, 100% pass rate** 🎉
+**Total: 752 tests across all packages, 100% pass rate** 🎉
 
 ## 🔧 Development Strategy
 
@@ -356,7 +356,7 @@ We strategically balance **full ownership** of core technology with **leveraging
   - Name mangling algorithm
   - 35 tests, 100% coverage
 
-**Total In-House:** 9/14 packages, 419 tests
+**Total In-House:** 9/15 packages, 419 tests
 
 #### ⚠️ Strategic Dependencies (Conversion Layer)
 
@@ -422,8 +422,8 @@ const synth = convertTreeSitterToSynth(tsTree)
 
 ```
 In-House Code:     419 tests (HTML, Markdown, JSON, CSS, TOML, INI, Format, Minify)
-Conversion Layer:  276 tests (JS, YAML, Python, Go, Rust)
-Total:            695 tests, 100% pass rate
+Conversion Layer:  333 tests (JS, YAML, Python, Go, Rust, SQL)
+Total:            752 tests, 100% pass rate
 ```
 
 ## 🚀 Roadmap: Upcoming Languages
@@ -493,11 +493,27 @@ const synth = convertTreeSitterToSynth(tsTree)
 
 ### Phase 7: Query Languages
 
-**@sylphx/synth-sql** - SQL Parser 🚧
-- SQL query parsing
-- Multiple dialects (PostgreSQL, MySQL, SQLite)
-- **Strategy:** Consider existing parser vs hand-written
-- Use cases: Query optimization, schema extraction
+**@sylphx/synth-sql** - SQL Parser
+```typescript
+// Third-party: node-sql-parser (widely used, enterprise-tested)
+const ast = sqlParser.astify(query, { database: 'mysql' })
+
+// Our code: node-sql-parser AST → Synth AST conversion
+const synth = convertSQLToSynth(ast)
+```
+
+**Why node-sql-parser?**
+- ❌ Writing SQL parser: 300+ hours, complex grammar, multiple dialects
+- ✅ node-sql-parser: Battle-tested, multi-dialect, actively maintained
+- **Our value:** Universal AST conversion, plugin system, cross-language tools
+
+**Features:**
+- ✅ Multiple dialects (MySQL, PostgreSQL, SQLite, MariaDB, Transact-SQL)
+- ✅ All query types (SELECT, INSERT, UPDATE, DELETE)
+- ✅ JOINs, aggregations, subqueries, CTEs, window functions
+- ✅ DDL statements (CREATE/ALTER/DROP TABLE)
+- ✅ 57 tests, 100% pass rate
+- Use cases: Query analysis, schema extraction, SQL linting, migrations
 
 **@sylphx/synth-graphql** - GraphQL Parser 🚧
 - GraphQL schema + query parsing
