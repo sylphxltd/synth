@@ -21,7 +21,11 @@
     "bench:list": "bun scripts/bench-all.ts list",
     "lint": "biome lint packages/",
     "format": "biome format --write packages/",
-    "check": "biome check --write packages/"
+    "check": "biome check --write packages/",
+    "changeset": "changeset",
+    "changeset:version": "changeset version",
+    "changeset:publish": "bun run build && changeset publish",
+    "release": "bun run build && bun run test && changeset publish"
   },
   "keywords": [
     "ast",
