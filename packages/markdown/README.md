@@ -9,7 +9,7 @@ High-performance Markdown parser - 26-42x faster than remark.
 - **Streaming**: Process Markdown incrementally
 - **Incremental**: Re-parse only changed regions
 - **Plugin System**: Extensible with transforms and visitors
-- **Zero Dependencies**: No runtime dependencies (core only)
+- **Zero Dependencies**: Self-contained implementation with no external parser dependencies
 
 ## Performance
 

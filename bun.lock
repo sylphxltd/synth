@@ -3,27 +3,25 @@
   "workspaces": {
     "": {
       "name": "@sylphx/synth",
-      "dependencies": {
+      "devDependencies": {
+        "@biomejs/biome": "^1.9.0",
+        "@changesets/cli": "^2.29.7",
+        "@types/node": "^22.0.0",
         "mdast-util-to-string": "^4.0.0",
         "rehype-stringify": "^10.0.1",
         "remark": "^15.0.1",
         "remark-parse": "^11.0.0",
         "remark-rehype": "^11.1.2",
         "remark-stringify": "^11.0.0",
-        "unified": "^11.0.5",
-      },
-      "devDependencies": {
-        "@biomejs/biome": "^1.9.0",
-        "@changesets/cli": "^2.29.7",
-        "@types/node": "^22.0.0",
         "turbo": "^2.0.0",
         "typescript": "^5.6.0",
+        "unified": "^11.0.5",
         "vitest": "^2.0.0",
       },
     },
     "packages/core": {
       "name": "@sylphx/ast-core",
-      "version": "2.0.0",
+      "version": "0.1.0",
       "devDependencies": {
         "@types/node": "^22.0.0",
         "typescript": "^5.6.0",
@@ -32,7 +30,7 @@
     },
     "packages/markdown": {
       "name": "@sylphx/ast-markdown",
-      "version": "2.0.0",
+      "version": "0.1.0",
       "dependencies": {
         "@sylphx/ast-core": "workspace:*",
         "@sylphx/ast-optimizations": "workspace:*",
@@ -53,7 +51,7 @@
     },
     "packages/optimizations": {
       "name": "@sylphx/ast-optimizations",
-      "version": "2.0.0",
+      "version": "0.1.0",
       "dependencies": {
         "@sylphx/ast-core": "workspace:*",
       },
@@ -65,7 +63,7 @@
     },
     "packages/plugin-system": {
       "name": "@sylphx/ast-plugin-system",
-      "version": "2.0.0",
+      "version": "0.1.0",
       "dependencies": {
         "@sylphx/ast-core": "workspace:*",
       },
