@@ -327,6 +327,12 @@ We strategically balance **full ownership** of core technology with **leveraging
   - 51 tests, 100% coverage
   - **Zero parsing dependencies**
 
+- **@sylphx/synth-css** - CSS3 parser
+  - Hand-written tokenizer + parser
+  - Full CSS3 support (selectors, at-rules, modern features)
+  - 49 tests, 100% coverage
+  - **Zero parsing dependencies**
+
 **Code Generation Tools:**
 - **@sylphx/synth-js-format** - JavaScript formatter
   - Custom Printer class
@@ -338,7 +344,7 @@ We strategically balance **full ownership** of core technology with **leveraging
   - Name mangling algorithm
   - 35 tests, 100% coverage
 
-**Total In-House:** 6/8 packages, 295 tests
+**Total In-House:** 7/9 packages, 344 tests
 
 #### ⚠️ Strategic Dependencies (Conversion Layer)
 
@@ -375,21 +381,21 @@ const synth = convertYAMLToSynth(doc)
 ### Test Coverage Breakdown
 
 ```
-In-House Code:     295 tests (HTML, Markdown, JSON, Format, Minify)
+In-House Code:     344 tests (HTML, Markdown, JSON, CSS, Format, Minify)
 Conversion Layer:  139 tests (JS, YAML)
-Total:            434 tests, 100% pass rate
+Total:            483 tests, 100% pass rate
 ```
 
 ## 🚀 Roadmap: Upcoming Languages
 
-### Phase 4: CSS & Styling (Next Priority)
+### Phase 4: CSS & Styling ✅ **COMPLETED**
 
-**@sylphx/synth-css** - CSS Parser 🚧
-- Full CSS3 support
-- Custom tokenizer + parser (in-house)
-- Selector, declaration, at-rule parsing
-- **Target:** Hand-written, zero dependencies
-- Use cases: Style analysis, CSS-in-JS, optimization
+**@sylphx/synth-css** - CSS Parser ✅
+- ✅ Full CSS3 support (selectors, at-rules, declarations)
+- ✅ Hand-written tokenizer + parser (zero dependencies)
+- ✅ Modern CSS (flexbox, grid, variables, functions)
+- ✅ 49 tests, 100% pass rate
+- Use cases: Style analysis, CSS-in-JS, optimization, linting
 
 ### Phase 5: Configuration Formats
 
