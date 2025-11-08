@@ -53,3 +53,16 @@ export {
   ASTIndex,
   createIndex,
 } from './query-index.js'
+
+export type {
+  Edit,
+  SimpleEdit,
+  AffectedRange,
+  IncrementalStats,
+} from './incremental.js'
+
+export {
+  IncrementalParser,
+  createIncrementalParser,
+  applyEdit,
+} from './incremental.js'
