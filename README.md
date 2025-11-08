@@ -339,6 +339,12 @@ We strategically balance **full ownership** of core technology with **leveraging
   - 38 tests, 100% coverage
   - **Zero parsing dependencies**
 
+- **@sylphx/synth-ini** - INI parser
+  - Hand-written direct parser
+  - Sections, key-value pairs, comments
+  - 37 tests, 100% coverage
+  - **Zero parsing dependencies**
+
 **Code Generation Tools:**
 - **@sylphx/synth-js-format** - JavaScript formatter
   - Custom Printer class
@@ -350,7 +356,7 @@ We strategically balance **full ownership** of core technology with **leveraging
   - Name mangling algorithm
   - 35 tests, 100% coverage
 
-**Total In-House:** 8/10 packages, 382 tests
+**Total In-House:** 9/11 packages, 419 tests
 
 #### ⚠️ Strategic Dependencies (Conversion Layer)
 
@@ -387,9 +393,9 @@ const synth = convertYAMLToSynth(doc)
 ### Test Coverage Breakdown
 
 ```
-In-House Code:     382 tests (HTML, Markdown, JSON, CSS, TOML, Format, Minify)
+In-House Code:     419 tests (HTML, Markdown, JSON, CSS, TOML, INI, Format, Minify)
 Conversion Layer:  139 tests (JS, YAML)
-Total:            521 tests, 100% pass rate
+Total:            558 tests, 100% pass rate
 ```
 
 ## 🚀 Roadmap: Upcoming Languages
@@ -403,7 +409,7 @@ Total:            521 tests, 100% pass rate
 - ✅ 49 tests, 100% pass rate
 - Use cases: Style analysis, CSS-in-JS, optimization, linting
 
-### Phase 5: Configuration Formats ✅ **IN PROGRESS**
+### Phase 5: Configuration Formats ✅ **COMPLETED**
 
 **@sylphx/synth-toml** - TOML Parser ✅
 - ✅ TOML 1.0 spec compliance
@@ -412,10 +418,11 @@ Total:            521 tests, 100% pass rate
 - ✅ 38 tests, 100% pass rate
 - Use cases: Rust Cargo.toml, Python pyproject.toml, config files
 
-**@sylphx/synth-ini** - INI Parser 🚧
-- Windows config files
-- .gitconfig, .editorconfig
-- **Target:** Hand-written (very simple)
+**@sylphx/synth-ini** - INI Parser ✅
+- ✅ Hand-written direct parser (zero dependencies)
+- ✅ Sections, key-value pairs, comments
+- ✅ 37 tests, 100% pass rate
+- Use cases: .gitconfig, .editorconfig, Windows INI, PHP INI
 
 ### Phase 6: Programming Languages (Strategic Dependencies)
 
