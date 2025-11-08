@@ -100,6 +100,17 @@ export class UltraOptimizedTokenizer {
         }
       }
 
+      // Horizontal rule detection (must come before list items)
+      if (firstChar === '-' || firstChar === '*' || firstChar === '_') {
+        const hrToken = this.tryHorizontalRule(text, lineStart, lineEnd, lineIndex, offset)
+        if (hrToken) {
+          tokens.push(hrToken)
+          offset = lineEnd + 1
+          lineIndex++
+          continue
+        }
+      }
+
       // List item detection (character-based, no regex)
       if (
         firstChar === '-' ||
@@ -113,17 +124,6 @@ export class UltraOptimizedTokenizer {
           offset = lineEnd + 1
           lineIndex++
           continue
-        }
-
-        // Horizontal rule
-        if (firstChar === '-' || firstChar === '*') {
-          const token = this.tryHorizontalRule(text, lineStart, lineEnd, lineIndex, offset)
-          if (token) {
-            tokens.push(token)
-            offset = lineEnd + 1
-            lineIndex++
-            continue
-          }
         }
       }
 
