@@ -290,7 +290,7 @@ const minified = minify('function hello() { return 42; }', { mangle: true })
 // → "function a(){return 42;}"
 ```
 
-**Total: 849 tests across all packages, 100% pass rate** 🎉
+**Total: 906 tests across all packages, 100% pass rate** 🎉
 
 ## 🔧 Development Strategy
 
@@ -356,7 +356,7 @@ We strategically balance **full ownership** of core technology with **leveraging
   - Name mangling algorithm
   - 35 tests, 100% coverage
 
-**Total In-House:** 9/17 packages, 419 tests
+**Total In-House:** 9/18 packages, 419 tests
 
 #### ⚠️ Strategic Dependencies (Conversion Layer)
 
@@ -422,8 +422,8 @@ const synth = convertTreeSitterToSynth(tsTree)
 
 ```
 In-House Code:     419 tests (HTML, Markdown, JSON, CSS, TOML, INI, Format, Minify)
-Conversion Layer:  430 tests (JS, YAML, Python, Go, Rust, SQL, GraphQL, XML)
-Total:            849 tests, 100% pass rate
+Conversion Layer:  487 tests (JS, YAML, Python, Go, Rust, SQL, GraphQL, XML, JSX)
+Total:            906 tests, 100% pass rate
 ```
 
 ## 🚀 Roadmap: Upcoming Languages
@@ -561,10 +561,27 @@ const synth = convertXMLToSynth(parsed)
 - ✅ 47 tests, 100% pass rate
 - Use cases: Config parsing, RSS/SVG, SOAP, build systems (Maven, Android)
 
-**@sylphx/synth-jsx** - JSX/TSX Parser 🚧
-- React component parsing
-- **Strategy:** Extend synth-js with JSX support
-- Leverage Acorn JSX plugin
+**@sylphx/synth-jsx** - JSX/TSX Parser
+```typescript
+// Third-party: Acorn + acorn-jsx (powers Webpack, Rollup)
+const ast = AcornJSXParser.parse(jsx, { ecmaVersion: 'latest' })
+
+// Our code: Acorn AST → Synth AST conversion
+const synth = convertJSXToSynth(ast)
+```
+
+**Why Acorn + acorn-jsx?**
+- ❌ Writing JSX parser: 80+ hours, complex syntax extensions
+- ✅ Acorn: Battle-tested, extensible, fast (powers major build tools)
+- **Our value:** Universal AST conversion, plugin system, cross-language tools
+
+**Features:**
+- ✅ Full JSX support (elements, attributes, expressions, fragments)
+- ✅ React components (functional, arrow functions, hooks)
+- ✅ Event handlers and conditional rendering
+- ✅ Lists with keys, JSX comments
+- ✅ 57 tests, 100% pass rate
+- Use cases: Component analysis, code transformation, linting, documentation
 
 **@sylphx/synth-vue** - Vue SFC Parser 🚧
 - Vue Single File Components
