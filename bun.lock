@@ -137,6 +137,19 @@
         "vitest": "^3.0.0",
       },
     },
+    "packages/synth-jsx": {
+      "name": "@sylphx/synth-jsx",
+      "version": "0.1.0",
+      "dependencies": {
+        "@sylphx/synth": "workspace:*",
+        "acorn": "^8.14.0",
+        "acorn-jsx": "^5.3.2",
+      },
+      "devDependencies": {
+        "@types/bun": "latest",
+        "typescript": "^5.0.0",
+      },
+    },
     "packages/synth-md": {
       "name": "@sylphx/synth-md",
       "version": "0.1.0",
@@ -448,6 +461,8 @@
 
     "@sylphx/synth-json": ["@sylphx/synth-json@workspace:packages/synth-json"],
 
+    "@sylphx/synth-jsx": ["@sylphx/synth-jsx@workspace:packages/synth-jsx"],
+
     "@sylphx/synth-md": ["@sylphx/synth-md@workspace:packages/synth-md"],
 
     "@sylphx/synth-md-gfm": ["@sylphx/synth-md-gfm@workspace:packages/synth-md-gfm"],
@@ -509,6 +524,8 @@
     "@vitest/utils": ["@vitest/utils@2.1.9", "", { "dependencies": { "@vitest/pretty-format": "2.1.9", "loupe": "^3.1.2", "tinyrainbow": "^1.2.0" } }, "sha512-v0psaMSkNJ3A2NMrUEHFRzJtDPFn+/VWZ5WxImB21T9fjucJRmS7xCS3ppEnARb9y11OAzaD+P2Ps+b+BGX5iQ=="],
 
     "acorn": ["acorn@8.15.0", "", { "bin": { "acorn": "bin/acorn" } }, "sha512-NZyJarBfL7nWwIq+FDL6Zp/yHEhePMNnnJ0y3qfieCrmNvYct8uvtiV41UvlSe6apAfk0fY1FbWx+NwfmpvtTg=="],
+
+    "acorn-jsx": ["acorn-jsx@5.3.2", "", { "peerDependencies": { "acorn": "^6.0.0 || ^7.0.0 || ^8.0.0" } }, "sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ=="],
 
     "acorn-typescript": ["acorn-typescript@1.4.13", "", { "peerDependencies": { "acorn": ">=8.9.0" } }, "sha512-xsc9Xv0xlVfwp2o7sQ+GCQ1PgbkdcpWdTzrwXxO3xDMTAywVS3oXVOcOHuRjAPkS4P9b+yc/qNF15460v+jp4Q=="],
 
