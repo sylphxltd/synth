@@ -239,6 +239,59 @@ const index = parser.getIndex()  // Build when needed
 
 📈 [View Detailed Benchmarks](./BENCHMARK_RESULTS.md)
 
+## 🌍 Multi-Language Support
+
+**NEW: Universal AST system supporting multiple languages!**
+
+### Parsers
+
+- ✅ **[@sylphx/synth-html](./packages/synth-html)** - HTML5 parser (88 tests)
+- ✅ **[@sylphx/synth-js](./packages/synth-js)** - JavaScript/TypeScript parser (98 tests)
+  - ES5 through ES2024+ support
+  - Built on Acorn (35.6M projects)
+  - TypeScript via plugin
+- ✅ **[@sylphx/synth-json](./packages/synth-json)** - JSON parser (51 tests)
+  - RFC 8259 compliant
+  - Hand-written recursive descent
+- ✅ **[@sylphx/synth-yaml](./packages/synth-yaml)** - YAML parser (41 tests)
+  - YAML 1.2 compliant
+  - GitHub Actions, Docker Compose, K8s configs
+
+### Tools
+
+- ✅ **[@sylphx/synth-js-format](./packages/synth-js-format)** - JavaScript formatter (33 tests)
+  - Prettier-style formatting
+  - Configurable options
+- ✅ **[@sylphx/synth-js-minify](./packages/synth-js-minify)** - JavaScript minifier (35 tests)
+  - 30-70% compression
+  - Optional name mangling
+
+### Quick Example
+
+```typescript
+// Same universal AST works for all languages
+import { parse as parseJS } from '@sylphx/synth-js'
+import { parse as parseJSON } from '@sylphx/synth-json'
+import { parse as parseYAML } from '@sylphx/synth-yaml'
+import { format } from '@sylphx/synth-js-format'
+import { minify } from '@sylphx/synth-js-minify'
+
+// Parse different languages
+const jsTree = parseJS('const x = 42;')
+const jsonTree = parseJSON('{"key": "value"}')
+const yamlTree = parseYAML('key: value')
+
+// Format JavaScript
+const formatted = format('const x=42;')
+// → "const x = 42;"
+
+// Minify JavaScript
+const minified = minify('function hello() { return 42; }', { mangle: true })
+// → "function a(){return 42;}"
+```
+
+**Total: 346 tests across all packages, 100% pass rate** 🎉
+
 ## 🤝 Contributing
 
 Contributions welcome! Please read our contributing guide first.
