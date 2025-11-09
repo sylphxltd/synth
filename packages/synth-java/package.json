@@ -1,0 +1,40 @@
+{
+  "name": "@sylphx/synth-java",
+  "version": "0.1.0",
+  "description": "Java parser using Synth's universal AST - conversion layer over tree-sitter-java",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": [
+    "java",
+    "parser",
+    "ast",
+    "synth",
+    "tree-sitter",
+    "java8",
+    "java11",
+    "java17"
+  ],
+  "author": "SylphX",
+  "license": "MIT",
+  "dependencies": {
+    "@sylphx/synth": "workspace:*",
+    "tree-sitter": "^0.21.1",
+    "tree-sitter-java": "^0.23.4"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.0"
+  }
+}
