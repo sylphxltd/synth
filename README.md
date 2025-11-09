@@ -290,7 +290,7 @@ const minified = minify('function hello() { return 42; }', { mangle: true })
 // → "function a(){return 42;}"
 ```
 
-**Total: 974 tests across all packages, 100% pass rate** 🎉
+**Total: 1002 tests across all packages, 100% pass rate** 🎉
 
 ## 🔧 Development Strategy
 
@@ -356,7 +356,7 @@ We strategically balance **full ownership** of core technology with **leveraging
   - Name mangling algorithm
   - 35 tests, 100% coverage
 
-**Total In-House:** 10/19 packages, 419 tests
+**Total In-House:** 11/19 packages, 419 tests
 
 #### ⚠️ Strategic Dependencies (Conversion Layer)
 
@@ -422,8 +422,8 @@ const synth = convertTreeSitterToSynth(tsTree)
 
 ```
 In-House Code:     419 tests (HTML, Markdown, JSON, CSS, TOML, INI, Format, Minify)
-Conversion Layer:  555 tests (JS, YAML, Python, Go, Rust, SQL, GraphQL, XML, JSX, Vue, Protobuf)
-Total:            974 tests, 100% pass rate
+Conversion Layer:  583 tests (JS, YAML, Python, Go, Rust, SQL, GraphQL, XML, JSX, Vue, Protobuf, MsgPack)
+Total:            1002 tests, 100% pass rate
 ```
 
 ## 🚀 Roadmap: Upcoming Languages
@@ -613,9 +613,11 @@ const synth = convertVueToSynth(descriptor)
 - Proto2 and Proto3 support
 - 27 tests, 100% pass rate
 
-**@sylphx/synth-msgpack** - MessagePack 🚧
-- Binary format support
-- Schema inference
+**@sylphx/synth-msgpack** - MessagePack ✅
+- Binary format parsing via @msgpack/msgpack
+- All data types: null, boolean, number, string, binary, array, map
+- Extension type support
+- 28 tests, 100% pass rate
 
 ### Phase 10: Advanced Tools
 
