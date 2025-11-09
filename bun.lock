@@ -150,6 +150,17 @@
         "typescript": "^5.0.0",
       },
     },
+    "packages/synth-lint": {
+      "name": "@sylphx/synth-lint",
+      "version": "0.1.0",
+      "dependencies": {
+        "@sylphx/synth": "workspace:*",
+      },
+      "devDependencies": {
+        "@types/bun": "latest",
+        "typescript": "^5.0.0",
+      },
+    },
     "packages/synth-md": {
       "name": "@sylphx/synth-md",
       "version": "0.1.0",
@@ -528,6 +539,8 @@
     "@sylphx/synth-json": ["@sylphx/synth-json@workspace:packages/synth-json"],
 
     "@sylphx/synth-jsx": ["@sylphx/synth-jsx@workspace:packages/synth-jsx"],
+
+    "@sylphx/synth-lint": ["@sylphx/synth-lint@workspace:packages/synth-lint"],
 
     "@sylphx/synth-md": ["@sylphx/synth-md@workspace:packages/synth-md"],
 

@@ -290,7 +290,7 @@ const minified = minify('function hello() { return 42; }', { mangle: true })
 // → "function a(){return 42;}"
 ```
 
-**Total: 1002 tests across all packages, 100% pass rate** 🎉
+**Total: 1019 tests across all packages, 100% pass rate** 🎉
 
 ## 🔧 Development Strategy
 
@@ -356,7 +356,7 @@ We strategically balance **full ownership** of core technology with **leveraging
   - Name mangling algorithm
   - 35 tests, 100% coverage
 
-**Total In-House:** 11/19 packages, 419 tests
+**Total In-House:** 12/19 packages, 436 tests
 
 #### ⚠️ Strategic Dependencies (Conversion Layer)
 
@@ -421,9 +421,9 @@ const synth = convertTreeSitterToSynth(tsTree)
 ### Test Coverage Breakdown
 
 ```
-In-House Code:     419 tests (HTML, Markdown, JSON, CSS, TOML, INI, Format, Minify)
+In-House Code:     436 tests (HTML, Markdown, JSON, CSS, TOML, INI, Format, Minify, Lint)
 Conversion Layer:  583 tests (JS, YAML, Python, Go, Rust, SQL, GraphQL, XML, JSX, Vue, Protobuf, MsgPack)
-Total:            1002 tests, 100% pass rate
+Total:            1019 tests, 100% pass rate
 ```
 
 ## 🚀 Roadmap: Upcoming Languages
@@ -621,10 +621,12 @@ const synth = convertVueToSynth(descriptor)
 
 ### Phase 10: Advanced Tools
 
-**@sylphx/synth-lint** - Universal Linter Framework 🚧
-- ESLint-like rules across all languages
-- Works on universal AST
-- Example: "No unused variables" works for JS, Python, Go, etc.
+**@sylphx/synth-lint** - Universal Linter Framework ✅
+- ESLint-like API with rule and visitor patterns
+- Language-agnostic rules work across all languages
+- Built-in rules: no-empty-blocks, no-console, max-depth
+- Extensible rule system with context helpers
+- 17 tests, 100% pass rate
 
 **@sylphx/synth-typecheck** - Type Checker 🚧
 - Cross-language type inference
